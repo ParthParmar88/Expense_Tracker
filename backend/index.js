@@ -13,11 +13,15 @@ const PORT = process.env.PORT || 8080;
 
 // ✅ Updated CORS Configuration
 const corsOptions = {
-    origin: process.env.FRONTEND_URL,  // e.g., "https://your-frontend.vercel.app"
+    origin: process.env.FRONTEND_URL,  // e.g., "https://expense-tracker-ruby-xi-45.vercel.app"
     credentials: true,
 };
 
 app.use(cors(corsOptions));
+
+// ✅ Allow preflight requests
+app.options('*', cors(corsOptions));
+
 app.use(bodyParser.json());
 
 // 🔧 Routes
