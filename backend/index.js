@@ -11,17 +11,24 @@ require('dotenv').config();
 require('./Models/db');
 const PORT = process.env.PORT || 8080;
 
+// ✅ Updated CORS Configuration
+const corsOptions = {
+    origin: process.env.FRONTEND_URL,  // e.g., "https://your-frontend.vercel.app"
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+
+// 🔧 Routes
 app.get('/ping', (req, res) => {
     res.send('PONG');
 });
-
-app.use(bodyParser.json());
-app.use(cors());
 app.use('/auth', AuthRouter);
 app.use('/products', ProductRouter);
-app.use('/expenses', ensureAuthenticated, ExpenseRouter)
+app.use('/expenses', ensureAuthenticated, ExpenseRouter);
 
-
+// ✅ Start Server
 app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`)
-})
+    console.log(`Server is running on ${PORT}`);
+});
